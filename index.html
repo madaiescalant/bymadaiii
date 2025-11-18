@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de Adviento</title>
+
+    <style>
+        .corazon {
+    position: fixed;
+    color: rgb(230, 1, 180);
+    font-size: 30px;
+    animation: flotar 2s linear forwards;
+    pointer-events: none;
+}
+
+@keyframes flotar {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-200px) scale(2);
+        opacity: 0;
+    }
+}
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #eedfedf6;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .botones {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: .3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #btn-si {
+            background-color: #e657d3;
+            color: white;
+            font-size: 3em;
+            padding: 20px 50px;
+            margin-right: 20px;
+            flex-grow: 1;
+        }
+
+        #btn-no {
+            background-color: #ec5050;
+            color: white;
+            font-size: 1em;
+            padding: 10px 20px;
+            position: absolute;
+            z-index: 100;
+            left: 80%;
+            top: 350px;
+        }
+
+        #mensaje-final {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            width: 100%;
+            text-align: center;
+        }
+        #btn-si {
+    background-color: #e657d3;
+    color: white;
+    font-size: 3em;
+    padding: 20px 50px;
+    margin-right: 20px;
+    flex-grow: 1;
+}
+
+#btn-no {
+    background-color: #ec5050;
+    color: white;
+    font-size: 1em;
+    padding: 10px 20px;
+    position: absolute;
+    z-index: 100;
+    left: 80%;
+    top: 380px;
+}
+
+#contenedor-pregunta {
+    margin-top: -80px;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <div id="contenedor-pregunta">
+        <h1>¿Me compras mi calendario de Adviento?💖 </h1>
+        
+         
+        <div class="botones">
+            <button id="btn-si" onclick="comprar()">¡Sí! Mi Amor</button>
+            <button id="btn-no" onclick="moverBoton()">No</button>
+        </div>
+
+        <img id="imagen-gato" src="img/gatotriste.jpg"
+            style="width:250px; margin-top:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
+    </div>
+    <div id="mensaje-final">
+        <h2>¡Sabia que dirias que sí! Eres el mejor novio del mundo 💖</h2>
+        <img id="imagen-final" src=""
+            style="display:none; width:250px; margin-top:20px; border-radius:10px;">
+    </div>
+
+<script>
+
+    const btnNo = document.getElementById('btn-no');
+    const contenedor = document.getElementById('contenedor-pregunta');
+    const mensajeFinal = document.getElementById('mensaje-final');
+
+    const textosNo = [
+        "¿Seguro que no lo quieres? ",
+        "¡Pero mira qué lindo es! ",
+        "¿Tan poco me quieres? ",
+        "No acepto un 'No' ",
+        "Por favor, piénsalo otra vez ",
+        "¿De verdad no quieres cariño? ",
+        "Me enojare contigo... ",
+        "Di que si loquita ",
+        "¿Y si te doy un besito? ",
+        "No hay forma de que me digas que no ",
+        "Por fiiii di que sí",
+        "¡Por favor amor! ",
+        "loquita mala ",
+        "Vale, dejaré de insistir...",
+        "Jaja te la creíste mocosa",
+        "Es broma, ¡por favor cómpramelo!",
+        "¡¡¡CÓMPRAMEEE!!!"
+    ];
+
+    let contador = 0;
+
+    function moverBoton()
+     {
+        const anchoPantalla = window.innerWidth;
+        const altoPantalla = window.innerHeight;
+
+        const anchoBoton = btnNo.offsetWidth;
+        const altoBoton = btnNo.offsetHeight;
+
+        const nuevoX = Math.random() * (anchoPantalla - anchoBoton);
+        const nuevoY = Math.random() * (altoPantalla - altoBoton);
+
+        btnNo.style.left = `${nuevoX}px`;
+        btnNo.style.top = `${nuevoY}px`;
+
+        btnNo.textContent = textosNo[contador % textosNo.length];
+        contador++;
+
+        const imagen = document.getElementById("imagen-gato");
+
+        const imagenes = [
+            "gatotriste.jpg",
+            "gato0.jpg",
+            "gat.jpg",
+            "cat.jpg",
+            "hamster.jpg",
+            "hamsterr.jpg",
+            "perr.webp"
+        ];
+
+        imagen.src = "img/" + imagenes[contador % imagenes.length];
+    }
+    function comprar() {
+
+        contenedor.style.display = 'none';
+        mensajeFinal.style.display = 'flex';
+
+        document.body.style.backgroundColor = '#d4edda';
+
+        const imagenFinal = document.getElementById("imagen-final");
+        imagenFinal.src = "img/lisa.gif";
+        imagenFinal.style.display = "block";
+
+        lanzarCorazones();
+    }
+
+    function lanzarCorazones() {
+        for (let i = 0; i < 20; i++) {
+            const corazon = document.createElement("div");
+            corazon.classList.add("corazon");
+            corazon.textContent = "💖";
+
+            corazon.style.left = Math.random() * window.innerWidth + "px";
+            corazon.style.top = (window.innerHeight - 50) + "px";
+
+            document.body.appendChild(corazon);
+
+            setTimeout(() => {
+                corazon.remove();
+            }, 2000);
+        }
+    }
+
+</script>
+</body>
+</html>
